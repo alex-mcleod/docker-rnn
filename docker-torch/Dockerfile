@@ -115,7 +115,7 @@ ENV LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-6.5/lib64
 ENV PATH=$PATH:/usr/local/cuda-6.5/bin
 
 # Link correct version of gcc for CUDA
-# RUN ln -s /usr/bin/gcc-4.4 /usr/local/cuda-6.5/bin/gcc
+RUN ln -s /usr/bin/gcc-4.4 /usr/local/cuda-6.5/bin/gcc
 
 # RUN apt-get -qqy install nvidia-cuda-dev
 # RUN apt-get -qqy install nvidia-cuda-toolkit
