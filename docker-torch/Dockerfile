@@ -11,8 +11,13 @@ RUN apt-get -qqy install wget
 RUN apt-get -qqy install unzip
 RUN apt-get -qqy install git-core
 RUN apt-get -qqy install build-essential
-RUN apt-get -qqy install gcc
-RUN apt-get -qqy install g++
+
+# Install required compiler versions for CUDA 
+RUN apt-get -qqy install gcc-4.7
+RUN apt-get -qqy install g++-4.7
+RUN ln -s /usr/bin/gcc-4.7 /usr/bin/gcc
+RUN ln -s /usr/bin/g++-4.7 /usr/bin/g++
+
 RUN apt-get -qqy install cmake
 RUN apt-get -qqy install gfortran
 RUN apt-get -qqy install gdb
@@ -97,9 +102,8 @@ ENV CUDA_RUN http://developer.download.nvidia.com/compute/cuda/6_5/rel/installer
 RUN apt-get update && apt-get install -q -y \
   wget \
   build-essential \
-  module-init-tools \
-  gcc-4.7 \
-  g++-4.7
+  module-init-tools
+
 
 RUN cd /opt && \
   wget $CUDA_RUN && \
@@ -107,20 +111,15 @@ RUN cd /opt && \
   mkdir nvidia_installers && \
   ./cuda_6.5.14_linux_64.run -extract=`pwd`/nvidia_installers && \
   cd nvidia_installers && \
-  ./NVIDIA-Linux-x86_64-340.29.run -s -N --no-kernel-module
+  ./NVIDIA-Linux-x86_64-340.29.run -s -N --no-kernel-module \
 
 RUN cd /opt/nvidia_installers && \
-  ./cuda-linux64-rel-6.5.14-18749181.run -noprompt
+  ./cuda-linux64-rel-6.5.14-18749181.run -noprompt \
+  ./cuda-samples-linux-6.5.14-18745345.run -noprompt -cudaprefix=/usr/local/cuda-6.5/
 
 # Ensure the CUDA libs and binaries are in the correct environment variables
 ENV LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-6.5/lib64
 ENV PATH=$PATH:/usr/local/cuda-6.5/bin
-
-# Use correct compiler versions for CUDA
-RUN rm /usr/bin/gcc
-RUN rm /usr/bin/g++
-RUN ln -s /usr/bin/gcc-4.7 /usr/bin/gcc
-RUN ln -s /usr/bin/g++-4.7 /usr/bin/g++
 
 RUN luarocks install cutorch
 RUN luarocks install cunn
