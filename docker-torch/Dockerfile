@@ -74,6 +74,6 @@ RUN luarocks install optim
 ENV LD_LIBRARY_PATH=/usr/local/lib/lua/5.1:$LD_LIBRARY_PATH
 ENV DYLD_LIBRARY_PATH=/usr/local/lib/lua/5.1:$DYLD_LIBRARY_PATH
 
-RUN apt-get clean && /var/lib/apt/lists/* /var/tmp/*
+RUN apt-get clean 
 
 EXPOSE 8888
