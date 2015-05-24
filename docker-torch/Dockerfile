@@ -122,9 +122,6 @@ RUN rm /usr/bin/g++
 RUN ln -s /usr/bin/gcc-4.7 /usr/bin/gcc
 RUN ln -s /usr/bin/g++-4.7 /usr/bin/g++
 
-# RUN apt-get -qqy install nvidia-cuda-dev
-# RUN apt-get -qqy install nvidia-cuda-toolkit
-
 RUN luarocks install cutorch
 RUN luarocks install cunn
 RUN luarocks install cunnx
