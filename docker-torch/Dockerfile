@@ -35,12 +35,11 @@ RUN apt-get -qq install vim
 
 # Install Torch 
 RUN curl -sk https://raw.githubusercontent.com/torch/ezinstall/master/install-deps | bash 
-RUN git clone https://github.com/torch/distro.git /opt/torch –-recursive 
+RUN git clone https://github.com/torch/distro.git /opt/torch --recursive 
 RUN cd /opt/torch ; /opt/torch/install.sh -b
 
 # Install CUDA 
 # Adapted from https://registry.hub.docker.com/u/tleyden5iwx/ubuntu-cuda/dockerfile/
-
 ENV CUDA_RUN http://developer.download.nvidia.com/compute/cuda/6_5/rel/installers/cuda_6.5.14_linux_64.run
 
 RUN apt-get update && apt-get install -q -y module-init-tools
