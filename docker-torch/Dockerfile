@@ -35,7 +35,7 @@ RUN apt-get -qq install vim
 
 # Install Torch 
 RUN curl -sk https://raw.githubusercontent.com/torch/ezinstall/master/install-deps | bash 
-RUN git clone https://github.com/torch/distro.git /opt/torch –recursive 
+RUN git clone https://github.com/torch/distro.git /opt/torch –-recursive 
 RUN cd /opt/torch ; /opt/torch/install.sh -b
 
 # Install CUDA 
@@ -57,10 +57,11 @@ RUN cd /opt/nvidia_installers && \
   ./cuda-linux64-rel-6.5.14-18749181.run -noprompt \
   ./cuda-samples-linux-6.5.14-18745345.run -noprompt -cudaprefix=/usr/local/cuda-6.5/
 
-# Ensure the CUDA libs and binaries are in the correct environment variables
+# Set CUDA env variables
 ENV LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-6.5/lib64
 ENV PATH=$PATH:/usr/local/cuda-6.5/bin
 
+# Install Lua packages
 RUN luarocks install nngraph 
 RUN luarocks install optim
 RUN luarocks install cutorch
