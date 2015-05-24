@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV PATH /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:.
 
 RUN apt-get -qq update
-RUN apt-get -qqy install \
+RUN apt-get -y install \
   apt-utils \
   git \
   curl \
@@ -12,6 +12,11 @@ RUN apt-get -qqy install \
   unzip \
   git-core \
   build-essential \
+  gcc \
+  g++ \
+  cmake \
+  gfortran \
+  gdb \
   vim \
   python-pip \
   python-dev
