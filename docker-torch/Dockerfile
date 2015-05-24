@@ -40,7 +40,7 @@ RUN cd /opt/nvidia_installers && \
   ./cuda-linux64-rel-6.5.14-18749181.run -noprompt \
   ./cuda-samples-linux-6.5.14-18745345.run -noprompt -cudaprefix=/usr/local/cuda-6.5/
 
-Set CUDA env variables
+# Set CUDA env variables
 ENV LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-6.5/lib64
 ENV PATH=$PATH:/usr/local/cuda-6.5/bin
 
