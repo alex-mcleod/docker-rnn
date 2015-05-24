@@ -128,6 +128,10 @@ RUN apt-get -qqy install libprotobuf-dev
 RUN apt-get -qqy install protobuf-compiler
 RUN luarocks install loadcaffe
 
+# Add paths to Lua packages
+ENV LD_LIBRARY_PATH=/usr/local/lib/lua/5.1:$LD_LIBRARY_PATH
+ENV DYLD_LIBRARY_PATH=/usr/local/lib/lua/5.1:$DYLD_LIBRARY_PATH
+
 RUN apt-get clean && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 ADD start-itorch /root/start-itorch
 ADD start-notebook /root/start-notebook
