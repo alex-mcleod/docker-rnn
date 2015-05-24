@@ -69,6 +69,8 @@ ENV PATH=$PATH:/usr/local/cuda-6.5/bin
 # Install Lua packages
 RUN luarocks install nngraph 
 RUN luarocks install optim
+RUN lurocks install cutorch
+RUN lurocks install cunn 
 
 # Add paths to Lua packages
 ENV LD_LIBRARY_PATH=/usr/local/lib/lua/5.1:$LD_LIBRARY_PATH
