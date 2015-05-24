@@ -4,6 +4,7 @@ Adapted instructions from http://stackoverflow.com/questions/25185405/using-gpu-
 
 Use ami-2cbf3e44 on an US East AWS machine with GPUs and at least 20gb of space, or follow instructions here http://tleyden.github.io/blog/2014/10/25/cuda-6-dot-5-on-aws-gpu-instance-running-ubuntu-14-dot-04/ to setup CUDA from scratch. 
  
-Install docker using the install-docker.sh script. 
+Clone this repo onto the machine. 
 
-docker-torch/Dockerfile installs the CUDA drivers within the container. 
+Install docker and the torch-local container using the install-docker.sh script. 
+
