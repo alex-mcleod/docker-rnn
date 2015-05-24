@@ -31,63 +31,10 @@ RUN apt-get install -qqy libssl-dev
 RUN apt-get install -qqy python-pip
 RUN apt-get install -qqy python-dev
 RUN pip install ipython[notebook]
-RUN apt-get install swig3.0 || apt-get install swig2.0
-
-WORKDIR /tmp
-RUN rm -rf luajit-rocks && git clone https://github.com/torch/luajit-rocks.git
-RUN cd luajit-rocks && mkdir build && cd build && cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local
-RUN cd luajit-rocks/build && make install
-
-RUN luarocks install paths
-RUN luarocks install cwrap
-RUN luarocks install torch
-
-RUN luarocks install luafilesystem
-RUN luarocks install penlight
-RUN luarocks install sys
-RUN luarocks install xlua
-RUN luarocks install image
-RUN luarocks install optim
-RUN luarocks install json
-RUN luarocks install lua-cjson
-RUN luarocks install trepl
-RUN luarocks install dok
-RUN luarocks install lzmq
-RUN luarocks install sundown
-RUN luarocks install gnuplot
-RUN luarocks install lbase64
-RUN luarocks install env
-RUN luarocks install luacrypto
-RUN luarocks install uuid
-RUN luarocks install iTorch
-
-RUN luarocks install torchx
-RUN luarocks install strict
-RUN luarocks install graph
-RUN luarocks install nn
-RUN luarocks install nnx
-RUN luarocks install nngraph
-RUN luarocks install totem
-RUN luarocks install rnn
-
-RUN luarocks install gnuplot
-RUN luarocks install async
-RUN luarocks install inline-c
-RUN luarocks install fn
-RUN luarocks install fs
-RUN luarocks install nngraph
-RUN luarocks install xlua
-RUN luarocks install randomkit
-RUN luarocks install python
-RUN luarocks install persist
-RUN luarocks install pprint
-
-RUN git clone https://github.com/deepmind/torch-hdf5.git
-RUN cd torch-hdf5 && luarocks install *.rockspec
-
 RUN apt-get -qq install vim
-RUN echo deb http://us.archive.ubuntu.com/ubuntu/ vivid multiverse >> /etc/apt/sources.list
-RUN apt-get -qq update
+
+# Install Torch 
+RUN curl -sk https://raw.githubusercontent.com/torch/ezinstall/master/install-deps | bash RUN git clone https://github.com/torch/distro.git /opt/torch –recursive RUN cd /opt/torch ; /opt/torch/install.sh -b
 
 # Install CUDA 
 # Adapted from https://registry.hub.docker.com/u/tleyden5iwx/ubuntu-cuda/dockerfile/
@@ -112,20 +59,18 @@ RUN cd /opt/nvidia_installers && \
 ENV LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-6.5/lib64
 ENV PATH=$PATH:/usr/local/cuda-6.5/bin
 
+RUN luarocks install nngraph 
+RUN luarocks install optim
 RUN luarocks install cutorch
 RUN luarocks install cunn
 RUN luarocks install cunnx
 RUN luarocks install ccn2
 RUN luarocks install inn
-RUN apt-get -qqy install libprotobuf-dev
-RUN apt-get -qqy install protobuf-compiler
-RUN luarocks install loadcaffe
 
 # Add paths to Lua packages
 ENV LD_LIBRARY_PATH=/usr/local/lib/lua/5.1:$LD_LIBRARY_PATH
 ENV DYLD_LIBRARY_PATH=/usr/local/lib/lua/5.1:$DYLD_LIBRARY_PATH
 
 RUN apt-get clean && /var/lib/apt/lists/* /var/tmp/*
-ADD start-itorch /root/start-itorch
-ADD start-notebook /root/start-notebook
+
 EXPOSE 8888
