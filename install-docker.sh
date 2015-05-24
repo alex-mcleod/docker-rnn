@@ -3,4 +3,4 @@ sudo sh -c "echo deb https://get.docker.com/ubuntu docker main > /etc/apt/source
 sudo apt-get update && sudo apt-get install -y lxc-docker
 
 cd docker-torch
-docker build --tag=tmbdev/torch-local
+docker build --tag=tmbdev/torch-local .
