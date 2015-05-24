@@ -88,10 +88,34 @@ RUN cd torch-hdf5 && luarocks install *.rockspec
 RUN apt-get -qq install vim
 RUN echo deb http://us.archive.ubuntu.com/ubuntu/ vivid multiverse >> /etc/apt/sources.list
 RUN apt-get -qq update
-RUN apt-get -qqy install nvidia-cuda-dev
-RUN apt-get -qqy install nvidia-cuda-toolkit
-#ENV CUDA_BIN_PATH=/usr/bin
-#ENV CUDA_TOOLKIT_ROOT_DIR=/usr
+
+# Install CUDA 
+# Adapted from https://registry.hub.docker.com/u/tleyden5iwx/ubuntu-cuda/dockerfile/
+
+ENV CUDA_RUN http://developer.download.nvidia.com/compute/cuda/6_5/rel/installers/cuda_6.5.14_linux_64.run
+
+RUN apt-get update && apt-get install -q -y \
+  wget \
+  build-essential 
+
+RUN cd /opt && \
+  wget $CUDA_RUN && \
+  chmod +x *.run && \
+  mkdir nvidia_installers && \
+  ./cuda_6.5.14_linux_64.run -extract=`pwd`/nvidia_installers && \
+  cd nvidia_installers && \
+  ./NVIDIA-Linux-x86_64-340.29.run -s -N --no-kernel-module
+
+RUN cd /opt/nvidia_installers && \
+  ./cuda-linux64-rel-6.5.14-18749181.run -noprompt
+
+# Ensure the CUDA libs and binaries are in the correct environment variables
+ENV LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-6.5/lib64
+ENV PATH=$PATH:/usr/local/cuda-6.5/bin
+
+# RUN apt-get -qqy install nvidia-cuda-dev
+# RUN apt-get -qqy install nvidia-cuda-toolkit
+
 RUN luarocks install cutorch
 RUN luarocks install cunn
 RUN luarocks install cunnx
