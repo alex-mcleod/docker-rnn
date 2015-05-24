@@ -1,0 +1,5 @@
+#!/bin/bash
+set -a
+PATH=/usr/local/bin:$PATH
+eval `luarocks path`
+itorch

@@ -1,0 +1,4 @@
+#!/bin/sh -x
+devs=""
+for d in /dev/nvidia*; do devs="--device $d:$d $devs"; done
+docker run -i -p 8888:8888 -t tmbdev/torch-local /root/start-notebook $devs "$@"

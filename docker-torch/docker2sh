@@ -1,0 +1,30 @@
+#!/usr/bin/python
+
+import os,sys,os.path,string,re,shutil
+
+def die(*args):
+    print " ".join([str(x) for x in args])
+    sys.exit(1)
+
+print "set -a; set -x; set -e"
+print "HERE=`/bin/pwd`"
+for line in sys.stdin.readlines():
+    line = line[:-1]
+    F = line.split()
+    if len(F)<1: continue
+    if line[0]=="#": continue
+    if F[0] in ["FROM", "MAINTAINER", "EXPOSE"]:
+        print "#",line
+        pass
+    elif F[0]=="RUN":
+        print "(",line[4:],")"
+    elif F[0]=="ENV":
+        print "%s='%s'"%(F[1],F[2])
+    elif F[0]=="ADD":
+        # NB: copies are relative to the docker script start directory
+        print """( cd "$HERE" && cp '%s' '%s' )"""%(F[1],F[2])
+    elif F[0]=="WORKDIR":
+        print "cd '%s'"%(F[1])
+    else:
+        die("unknown command")
+
