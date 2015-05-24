@@ -15,6 +15,8 @@ RUN apt-get -qqy install build-essential
 # Install required compiler versions for CUDA 
 RUN apt-get -qqy install gcc-4.7
 RUN apt-get -qqy install g++-4.7
+RUN rm /usr/bin/gcc
+RUN rm /usr/bin/g++
 RUN ln -s /usr/bin/gcc-4.7 /usr/bin/gcc
 RUN ln -s /usr/bin/g++-4.7 /usr/bin/g++
 
@@ -99,11 +101,7 @@ RUN apt-get -qq update
 
 ENV CUDA_RUN http://developer.download.nvidia.com/compute/cuda/6_5/rel/installers/cuda_6.5.14_linux_64.run
 
-RUN apt-get update && apt-get install -q -y \
-  wget \
-  build-essential \
-  module-init-tools
-
+RUN apt-get update && apt-get install -q -y module-init-tools
 
 RUN cd /opt && \
   wget $CUDA_RUN && \
