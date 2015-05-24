@@ -96,7 +96,8 @@ ENV CUDA_RUN http://developer.download.nvidia.com/compute/cuda/6_5/rel/installer
 
 RUN apt-get update && apt-get install -q -y \
   wget \
-  build-essential 
+  build-essential \
+  module-init-tools
 
 RUN cd /opt && \
   wget $CUDA_RUN && \
