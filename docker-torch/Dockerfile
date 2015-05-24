@@ -125,7 +125,7 @@ RUN luarocks install loadcaffe
 ENV LD_LIBRARY_PATH=/usr/local/lib/lua/5.1:$LD_LIBRARY_PATH
 ENV DYLD_LIBRARY_PATH=/usr/local/lib/lua/5.1:$DYLD_LIBRARY_PATH
 
-RUN apt-get clean && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
+RUN apt-get clean && /var/lib/apt/lists/* /var/tmp/*
 ADD start-itorch /root/start-itorch
 ADD start-notebook /root/start-notebook
 EXPOSE 8888
