@@ -33,6 +33,12 @@ RUN apt-get install -qqy python-dev
 RUN pip install ipython[notebook]
 RUN apt-get -qq install vim
 
+# Instal luarocks
+WORKDIR /tmp
+RUN rm -rf luajit-rocks && git clone https://github.com/torch/luajit-rocks.git
+RUN cd luajit-rocks && mkdir build && cd build && cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local
+RUN cd luajit-rocks/build && make install
+
 # Install Torch 
 RUN curl -sk https://raw.githubusercontent.com/torch/ezinstall/master/install-deps | bash 
 RUN git clone https://github.com/torch/distro.git /opt/torch --recursive 
@@ -63,11 +69,6 @@ ENV PATH=$PATH:/usr/local/cuda-6.5/bin
 # Install Lua packages
 RUN luarocks install nngraph 
 RUN luarocks install optim
-RUN luarocks install cutorch
-RUN luarocks install cunn
-RUN luarocks install cunnx
-RUN luarocks install ccn2
-RUN luarocks install inn
 
 # Add paths to Lua packages
 ENV LD_LIBRARY_PATH=/usr/local/lib/lua/5.1:$LD_LIBRARY_PATH
