@@ -1,4 +1,4 @@
-FROM ubuntu:15.04
+FROM ubuntu:14.04
 MAINTAINER Tom <tmbdev@gmail.com>
 ENV DEBIAN_FRONTEND noninteractive
 ENV PATH /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:.
@@ -11,15 +11,8 @@ RUN apt-get -qqy install wget
 RUN apt-get -qqy install unzip
 RUN apt-get -qqy install git-core
 RUN apt-get -qqy install build-essential
-
-# Install required compiler versions for CUDA 
-RUN apt-get -qqy install gcc-4.7
-RUN apt-get -qqy install g++-4.7
-RUN rm /usr/bin/gcc
-RUN rm /usr/bin/g++
-RUN ln -s /usr/bin/gcc-4.7 /usr/bin/gcc
-RUN ln -s /usr/bin/g++-4.7 /usr/bin/g++
-
+RUN apt-get -qqy install gcc
+RUN apt-get -qqy install g++ 
 RUN apt-get -qqy install cmake
 RUN apt-get -qqy install gfortran
 RUN apt-get -qqy install gdb
