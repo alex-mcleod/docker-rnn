@@ -63,6 +63,7 @@ RUN luarocks install cunn
 
 # Add paths to Lua packages
 ENV LD_LIBRARY_PATH=/usr/local/lib/lua/5.1:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH=/usr/local/lib:/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
 ENV DYLD_LIBRARY_PATH=/usr/local/lib/lua/5.1:$DYLD_LIBRARY_PATH
 
 RUN apt-get clean 
