@@ -56,10 +56,8 @@ RUN git clone https://github.com/torch/distro.git /opt/torch --recursive
 RUN cd /opt/torch ; /opt/torch/install.sh -b
 
 # Install Lua packages
-RUN luarocks install nngraph 
-RUN luarocks install optim
-RUN luarocks install cutorch
-RUN luarocks install cunn 
+# RUN luarocks install nngraph 
+# RUN luarocks install optim
 
 # Add paths to Lua packages
 ENV LD_LIBRARY_PATH=/usr/local/lib/lua/5.1:$LD_LIBRARY_PATH
