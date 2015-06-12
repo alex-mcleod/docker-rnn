@@ -9,4 +9,4 @@
  -e HOME=/work \
  -e PS1='docker-torch$ ' \
  tmbdev/torch-local \
- th "$@"
+/opt/torch/install/bin/th "$@"
