@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:12.04
 MAINTAINER Tom <tmbdev@gmail.com>
 ENV DEBIAN_FRONTEND noninteractive
 ENV PATH /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:.
