@@ -41,10 +41,10 @@ RUN cd /opt/nvidia_installers && \
   ./cuda-samples-linux-6.5.14-18745345.run -noprompt -cudaprefix=/usr/local/cuda-6.5/
 
 # Set CUDA env variables
-ENV LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-6.5/lib64
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-6.5/lib64
 ENV PATH=$PATH:/usr/local/cuda-6.5/bin
 
-# Instal luarocks
+# Install luarocks
 WORKDIR /tmp
 RUN rm -rf luajit-rocks && git clone https://github.com/torch/luajit-rocks.git
 RUN cd luajit-rocks && mkdir build && cd build && cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local
@@ -59,11 +59,16 @@ RUN cd /opt/torch ; /opt/torch/install.sh -b
 # RUN luarocks install nngraph 
 # RUN luarocks install optim
 
-# Add paths to Lua packages
-ENV LD_LIBRARY_PATH=/usr/local/lib/lua/5.1:$LD_LIBRARY_PATH
-ENV LD_LIBRARY_PATH=/usr/local/lib:/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
-ENV LD_LIBRARY_PATH=/opt/torch/install/lib/lua/5.1/:$LD_LIBRARY_PATH
-ENV DYLD_LIBRARY_PATH=/usr/local/lib/lua/5.1:$DYLD_LIBRARY_PATH
+# Add paths to Lua and Nvidia shared libraries. 
+# Have avoided using LD_LIBRARY_PATH env variable 
+# because it was not reliable. 
+RUN echo "/usr/local/cuda-6.5/lib64\n" >> /etc/ld.so.conf
+RUN echo "/usr/local/lib/lua/5.1\n" >> /etc/ld.so.conf
+RUN echo "/usr/local/lib:/opt/OpenBLAS/lib\n" >> /etc/ld.so.conf
+RUN echo "/opt/torch/install/lib/lua/5.1/\n" >> /etc/ld.so.conf
+
+# Rebuild ldconfig cache
+RUN ldconfig -v
 
 RUN apt-get clean 
 
