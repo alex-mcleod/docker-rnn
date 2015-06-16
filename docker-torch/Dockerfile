@@ -56,8 +56,8 @@ RUN git clone https://github.com/torch/distro.git /opt/torch --recursive
 RUN cd /opt/torch ; /opt/torch/install.sh -b
 
 # Install Lua packages
-# RUN luarocks install nngraph 
-# RUN luarocks install optim
+RUN luarocks install nngraph 
+RUN luarocks install optim
 
 # Add paths to Lua and Nvidia shared libraries. 
 # Have avoided using LD_LIBRARY_PATH env variable 
