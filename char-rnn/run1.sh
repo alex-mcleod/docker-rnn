@@ -1,5 +1,5 @@
  docker run -i -t \
- --d \
+ -d \
  --device /dev/nvidia0:/dev/nvidia0 --device /dev/nvidiactl:/dev/nvidiactl --device /dev/nvidia-uvm:/dev/nvidia-uvm \
  --dns 8.8.8.8 \
  -v `pwd`:/work \
