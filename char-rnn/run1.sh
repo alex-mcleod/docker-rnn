@@ -9,4 +9,4 @@
  -e HOME=/work \
  -e PS1='docker-torch$ ' \
  tmbdev/torch-local \
-/opt/torch/install/bin/th train.lua -data_dir data/tinyshakespeare/ -rnn_size 1024 -num_layers 4 -gpuid 0 > log/train
+/opt/torch/install/bin/th train.lua -data_dir data/tinyshakespeare/ -rnn_size 700 -num_layers 3 -gpuid 0 > log/train
