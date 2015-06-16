@@ -19,8 +19,7 @@ RUN apt-get -y install \
   gdb \
   vim \
   python-pip \
-  python-dev \
-  dtach 
+  python-dev
 RUN pip install ipython[notebook]
 
 # Install CUDA 
