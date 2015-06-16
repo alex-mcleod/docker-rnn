@@ -1,1 +1,1 @@
-../runth.sh train.lua -data_dir data/tinyshakespeare/ -rnn_size 512 -num_layers 2 -gpuid 0 > log/train.log
+../runth.sh train.lua -data_dir data/tinyshakespeare/ -rnn_size 512 -num_layers 2 -gpuid 0
